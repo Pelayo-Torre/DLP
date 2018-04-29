@@ -1,2 +1,2 @@
 # DLP
-Diseño de un Lenguaje de Programación.
+Proyecto de Diseño de Lenguajes de Programación

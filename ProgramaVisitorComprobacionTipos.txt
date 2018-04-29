@@ -1,0 +1,92 @@
+var integer int;
+ var character char;
+ var real float32;
+
+ var i int;
+ var f float32;
+ var ara[5] int;
+ var arb[6] int;
+ 
+ var a struct  {
+  a int;
+};
+
+ var a float32;									// * Error variable duplicada   -
+ 
+ func hola() int{
+	 write(i && f); 							// * Error 1 , las lógicas deben ser de enteros -
+	 write(i && i || i || i);
+	 i = a.a + arb[4];
+  	write(a >= 3); 								// * Error 2   las comparaciones deben de ser del mismo tipo (int, float32, char). -
+  	while f {     								// * Error 3 si  -
+    	if f {     					 			// * Error 4 si  -
+      		write(!f);   						// * Error 5 si  -
+      		write(!rtr);						// * Error variable no existe   -
+		}
+  	}
+  	
+  	return 4.3;									// * Error tipo de retorno inválido  -
+ }
+ 
+ func comprobarTipos() void{
+ 	if 9 > 8 {
+ 		if 9 > 2.3 {}							// * Error -  -
+ 		write(7 <= 9.8);						// * Error  -
+ 		if '2' || '4'{}							// * Error -  -
+ 	}
+ }
+ 
+ var v [10]int;
+ 
+ func funcion343(param int) void{
+ 	var param int;									// * Error, no se puede definir variables con el mismo nombre que parámetros  -
+ 	if(v[5]){
+ 	
+ 	}
+ }
+ 
+ var param int;
+ 
+ func funcion343() void {							// * Error, no hay sobrecarga   -
+ 	hola();
+ }
+ 
+ func funcion567(para1 float32, para1 int) void{	// * Error, parámetros repetidos.   -
+ 	funcion343(5);
+ }
+ 
+ func funcion(a int, b float32, c char) void{
+ 	var i int;
+	i[0]=0;     								 // * Error 1  -  -
+  	v[3]=3.4;    								 // * Error 2  -
+  	v[1][2]=9; 									 // * Error 3  -
+ 	return 4;									 // * Error,no se debe retornar  -
+ }
+
+ var date struct  { 
+   day int;
+   month int;
+   day float32; 								// * Error variable day repetida  -
+ };
+
+ func funcionSinretorno() int {					// * Error, la función necesita sentencia return  -
+ 	var s int;
+ 	s = 9;
+ }
+
+ func main() void {
+ 
+	funcion(5);								// * Error, faltan 2 parámetros -
+	funcion(5, 5.3);						// * Error, falta un parámetro   -
+	funcion(5.3, 'b', 2);					// * Error, tipos incorrectos.   -
+	funcion();								// * Error, faltan parámetros    -
+	funcion(4, 5.6, 'k'); 
+	ff();									// * Error, no existe   -
+   read(integer); 
+   character=8.5; 							// * Error en la asignaciín de tipos   -
+   3=integer; 								// * Error LValue    -
+  read(integer+2); 							// * Error LValue    -
+   read(date.year); 							// * Error No existe el campo year en el Struct   -
+ }
+ 
+ 

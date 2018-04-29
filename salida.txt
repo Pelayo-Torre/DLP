@@ -1,0 +1,70 @@
+#source programa
+
+	'  * var i int (offset 0)
+	'  * var r float32 (offset 2)
+	'  * var c char (offset 6)
+
+'  Invocation to the main function
+call <main>
+halt
+
+
+'  f:
+	'  * Parameters
+	'  * var pi int (offset 8)
+	'  * var pr float32 (offset 4)
+	'  * Local variables
+	'  * var lr float32 (offset -4)
+	'  * var li int (offset -6)
+	enter 6
+	pusha	bp
+	push	-6
+	addi
+	pusha	bp
+	push	8
+	addi
+	loadi
+	storei
+	
+	
+	pusha	bp
+	push	-4
+	addi
+	pusha	bp
+	push	4
+	addi
+	loadf
+	storef
+	ret 0, 6, 6
+'  Main:
+	'  * Parameters
+	'  * Local variables
+	'  * var pair TipoStruct [campos=[CampoStruct [nombre=integer, tipo=int], CampoStruct [nombre=character, tipo=char]]] (offset -3)
+	enter 3
+	pusha	0
+	push	3
+	storei
+	pusha	6
+	pushb	97
+	storeb
+	pusha	2
+	pushf	3.8
+	storef
+	pusha	bp
+	push	-3
+	addi
+	push	0
+	addi
+	pusha	0
+	loadi
+	storei
+	
+	pusha	bp
+	push	-3
+	addi
+	push	2
+	addi
+	pusha	6
+	loadb
+	storeb
+	ret 0, 3, 0

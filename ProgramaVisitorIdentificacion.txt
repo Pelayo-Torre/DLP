@@ -1,0 +1,54 @@
+ var a int;
+ var b char;
+ var c, g, h float32;
+ var integer int;
+ var character char;
+ var real, integer float32; 			// * Error variable ya declarada    -
+ var b char;							// * Error variable ya declarada    -
+ 
+ var pair struct{
+ 	h, v, j, h int;						// * Error variable h repetida   -
+ 	g float32;
+ 	h float32;							// * Error variable h repetida   -
+ 	ok char;
+ 	j char;								// * Error variable j repetida   -
+ 	v, m, n , l, h float32;				// * Error variables v y h repetidas       -  -
+ };
+
+ func funcion1() int{
+	a = 4;
+	j =k;								// * Errores variables no definidas.      -  -
+	g();								// * Error función no definida     -  -
+	b = paireeee.hola;					// * Error el struct no está definido   -   -
+	write(g());							// * Error Llamada a función como expresión no definida.    -  -
+ }
+ 
+ func funcion1() float32{				// * Error, función ya declarada    -
+ 	var a int;
+ 	var comer float32;
+ 	var pair struct{
+ 		ki float32;
+ 		g float32;
+ 	};
+ 	var pairop struct{
+ 		ki float32;
+ 		g float32;
+ 	};
+ }
+ 
+ func main() void{
+ 	var a, b, c, g, b int;				// * Error variable b repetida   -
+ 	var g float32;						// * Error variable g repetida   -
+ 	read(integer, i); 					// * Error Variable i no definida  -
+  	f();       							// * Error Función no definida.   -
+  	if(6 > 4){
+  		write(6+2.3);					// * Error No se puede haer una aritmética de distintos tipos.   -
+  		write(6+6);
+  		write('p'+'l');
+  	}
+  	if(4.5 < 9.6){
+  		write(g);
+  	}
+ 	a = pairop.ki;						// * Error Struct no definido globalmente   -   -
+ 	comer = g;							// * Variable comer no definida.
+ }
