@@ -8,8 +8,11 @@ import ast.DefVariable;
 import ast.Definicion;
 import ast.Escritura;
 import ast.Expresion;
+import ast.InvocacionFuncion;
 import ast.Lectura;
+import ast.Procedimiento;
 import ast.Programa;
+import ast.Return;
 import ast.Sentencia;
 import tipo.TipoFuncion;
 import tipo.TipoVoid;
@@ -110,6 +113,9 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	
 	@Override
 	public Object visit(DefFuncion defFuncion, Object param) {
+		//Array que le envío a la sentencia retorno para hacer el RET
+		int[] necesarioRetorno = new int [3];
+		necesarioRetorno[0] = defFuncion.getTipo().numeroBytes();
 		try {
 			cg.comentario(defFuncion.getNombre() + ":");
 			cg.comentarioTabulado("* Parameters");
@@ -120,6 +126,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 				dv.accept(this, param);
 				tamParametros += dv.getTipo().numeroBytes();
 			}
+			necesarioRetorno[2] = tamParametros;
 			cg.comentarioTabulado("* Local variables");
 			
 			int tamLocales = 0;
@@ -130,23 +137,49 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 					tamLocales += ((DefVariable)s).getTipo().numeroBytes();
 				}
 			}
+			necesarioRetorno[1] = tamLocales;
 			
 			cg.enter(tamLocales);
 			//Recorremos las sentencias de la función que no sean defVariables.
 			for(Sentencia s : defFuncion.getSentencias()) {
 				if(!(s instanceof DefVariable)) {
-					s.accept(this, param);
+					s.accept(this, necesarioRetorno);
 				}
 			}
 			
 			//Comprobamos que no sea de tipo VOID y ejecutamos el RET
-			if(!(defFuncion.getTipo() instanceof TipoVoid))
+			if(((TipoFuncion)defFuncion.getTipo()).getTipoRetorno() instanceof TipoVoid)
 				cg.ret(0, tamLocales, tamParametros);
 			
 		} catch (IOException e) {
 			System.err.println("Error al ejecutar visit (E) de defFuncion");
 		}
 		
+		return null;
+	}
+	
+	@Override
+	public Object visit(Procedimiento proc, Object param) {
+		for(Expresion e : proc.getExpresiones())
+			e.accept(vcgv, param);
+		try {
+			cg.call(proc.getNombre().getNombre());
+			if(!(((TipoFuncion)proc.getNombre().getDefinicion().getTipo()).getTipoRetorno() instanceof TipoVoid))
+				cg.pop(((TipoFuncion)proc.getNombre().getDefinicion().getTipo()).getTipoRetorno().suffix());
+		} catch (IOException e) {
+			System.err.println("Error al hacer una llamada a la función VALUE. Línea: "+proc.getNombre().getLine());
+		}
+		return null;
+	}
+	
+	@Override
+	public Object visit(Return sentenciaReturn, Object param) {
+		sentenciaReturn.getExpr().accept(vcgv, param);
+		try {
+			cg.ret(((int[])param)[0], ((int[])param)[1], ((int[])param)[2]);
+		} catch (IOException e) {
+			System.err.println("Error al hacer la sentencia Return EXECUTE. Línea: "+sentenciaReturn.getLine());
+		}
 		return null;
 	}
 

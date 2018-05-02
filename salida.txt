@@ -25,6 +25,7 @@ halt
 	addi
 	loadi
 	storei
+	
 	pusha	bp
 	push	-4
 	addi
@@ -33,7 +34,12 @@ halt
 	addi
 	loadf
 	storef
-	ret 0, 6, 6
+	
+	pusha	bp
+	push	8
+	addi
+	loadi
+	ret 2, 6, 6
 '  Main:
 	'  * Parameters
 	'  * Local variables
@@ -48,6 +54,8 @@ halt
 	pusha	2
 	pushf	3.8
 	storef
+	
+	
 	pusha	bp
 	push	-3
 	addi
@@ -56,6 +64,7 @@ halt
 	pusha	0
 	loadi
 	storei
+	
 	pusha	bp
 	push	-3
 	addi
@@ -64,4 +73,11 @@ halt
 	pusha	6
 	loadb
 	storeb
+	
+	pusha	0
+	loadi
+	pusha	2
+	loadf
+call <f>
+	popi
 	ret 0, 3, 0

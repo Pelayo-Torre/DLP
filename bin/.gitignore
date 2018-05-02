@@ -1,13 +1,1 @@
-/ast/
-/compile.cmd
 /generacionCodigo/
-/lexico/
-/main/
-/manejadorerrores/
-/run.cmd
-/semantico/
-/sintactico/
-/tablasimbolos/
-/test/
-/tipo/
-/visitor/

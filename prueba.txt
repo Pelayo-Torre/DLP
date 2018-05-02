@@ -5,12 +5,12 @@ var r float32;
 var c char;
 
 // * Funciones
-func f(pi int, pr float32) void {
+func f(pi int, pr float32) int {
   var lr float32;
   var li int;
   li = pi;
   lr = pr;
- // return pi;
+  return pi;
 }
 
 // * Programa principal
@@ -25,5 +25,5 @@ func main() void{
   r = 3.8;
   pair.integer = i;
   pair.character = c;
- // f(i, r);
+  f(i, r);
 }

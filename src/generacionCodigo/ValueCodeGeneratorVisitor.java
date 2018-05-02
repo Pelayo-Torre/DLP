@@ -9,8 +9,11 @@ import ast.Char;
 import ast.Comparacion;
 import ast.ConstanteEntera;
 import ast.ConstanteReal;
+import ast.Expresion;
+import ast.InvocacionFuncion;
 import ast.Logica;
 import ast.Negacion;
+import ast.Procedimiento;
 import ast.Variable;
 import tipo.TipoChar;
 import tipo.TipoFloat32;
@@ -161,6 +164,18 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 			cg.load(accesoCampo.getTipo().suffix());
 		} catch (IOException e) {
 			System.err.println("Error al acceder a campo en plantilla VALUE. Línea: "+accesoCampo.getLine());
+		}
+		return null;
+	}
+	
+	@Override
+	public Object visit(InvocacionFuncion invocacionFuncion, Object param) {
+		for(Expresion e : invocacionFuncion.getArgumentos())
+			e.accept(this, param);
+		try {
+			cg.call(invocacionFuncion.getNombre().getNombre());
+		} catch (IOException e) {
+			System.err.println("Error al hacer una llamada a la función VALUE. Línea: "+invocacionFuncion.getNombre().getLine());
 		}
 		return null;
 	}
