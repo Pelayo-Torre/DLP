@@ -284,9 +284,10 @@ public class VisitorComprobacionTipos extends VisitorPorDefecto {
 		}
 
 		if (invocacionFuncion.getNombre().getDefinicion() != null) {
-			if (invocacionFuncion.getNombre().getDefinicion().getTipo().parentesis(tipos) == null) {
-				new TipoError(invocacionFuncion.getLine(), invocacionFuncion.getColumn(),
-						"Los argumentos pasados en la invocación no son correctos");
+			invocacionFuncion.setTipo(invocacionFuncion.getNombre().getDefinicion().getTipo().parentesis(tipos));
+			if (invocacionFuncion.getTipo() == null) {
+				invocacionFuncion.setTipo(new TipoError(invocacionFuncion.getLine(), invocacionFuncion.getColumn(),
+						"Los argumentos pasados en la invocación no son correctos"));
 			}
 		}
 

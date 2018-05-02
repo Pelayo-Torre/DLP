@@ -1,30 +1,92 @@
 #source programa
 
 	'  * var i int (offset 0)
-	'  * var r float32 (offset 2)
+	'  * var n int (offset 2)
+	'  * var j int (offset 4)
 	'  * var c char (offset 6)
+	'  * var pair TipoStruct [campos=[CampoStruct [nombre=integer, tipo=int], CampoStruct [nombre=character, tipo=char]]] (offset 7)
+	'  * var matrix TipoArray [tamaño=10, tipo=TipoArray [tamaño=10, tipo=int]] (offset 10)
 
 '  Invocation to the main function
 call <main>
 halt
 
 
+'  p:
+	'  * Parameters
+	'  * Local variables
+	enter 0
+	ret 0, 0, 0
 '  f:
 	'  * Parameters
-	'  * var pi int (offset 8)
-	'  * var pr float32 (offset 4)
+	'  * var r float32 (offset 6)
+	'  * var e int (offset 4)
 	'  * Local variables
-	'  * var lr float32 (offset -4)
-	'  * var li int (offset -6)
-	enter 6
+	'  * var real float32 (offset -4)
+	'  * var c char (offset -5)
+	enter 5
+	
+	
 	pusha	bp
-	push	-6
+	push	-4
 	addi
-	pusha	bp
-	push	8
+	pusha	7
+	push	2
+	addi
+	loadb
+b2i
+i2f
+	pusha	7
+	push	0
 	addi
 	loadi
+i2f
+	addf
+	pusha	bp
+	push	6
+	addi
+	loadf
+	addf
+	pusha	bp
+	push	4
+	addi
+	loadi
+i2f
+	addf
+	storef
+	
+	
+	pusha	bp
+	push	-5
+	addi
+	pushb	48
+	storeb
+	
+	
+	
+	pusha	bp
+	push	-5
+	addi
+	loadb
+b2i
+	ret 2, 5, 6
+	
+	
+'  fill:
+	'  * Parameters
+	'  * var row int (offset 8)
+	'  * var value int (offset 6)
+	'  * var increment int (offset 4)
+	'  * Local variables
+	'  * var i int (offset -2)
+	'  * var inc int (offset -4)
+	enter 4
+	pusha	bp
+	push	-2
+	addi
+	push	0
 	storei
+	
 	
 	pusha	bp
 	push	-4
@@ -32,52 +94,272 @@ halt
 	pusha	bp
 	push	4
 	addi
-	loadf
-	storef
+	loadi
+	storei
 	
+	
+label_0:
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	push	10
+	lti
+	jz label_1
+	
+	
+	
+	pusha	10
 	pusha	bp
 	push	8
 	addi
 	loadi
-	ret 2, 6, 6
+	push	20
+	muli
+	addi
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	push	2
+	muli
+	addi
+	pusha	bp
+	push	6
+	addi
+	loadi
+	pusha	bp
+	push	-4
+	addi
+	loadi
+	addi
+	storei
+	
+	
+	pusha	bp
+	push	-2
+	addi
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	push	1
+	addi
+	storei
+	
+	
+	
+	pusha	bp
+	push	-4
+	addi
+	pusha	bp
+	push	-4
+	addi
+	loadi
+	pusha	bp
+	push	4
+	addi
+	loadi
+	addi
+	storei
+	jmp label_0
+label_1:
+	ret 0, 4, 6
+'  show:
+	'  * Parameters
+	'  * var row int (offset 4)
+	'  * Local variables
+	'  * var i int (offset -2)
+	enter 2
+	pusha	bp
+	push	-2
+	addi
+	push	0
+	storei
+	
+	
+label_2:
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	push	10
+	lti
+	jz label_3
+	
+	
+	pushb	40
+	outb
+	
+	
+	pusha	bp
+	push	4
+	addi
+	loadi
+	outi
+	
+	
+	pushb	44
+	outb
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	outi
+	
+	
+	
+	pushb	41
+	outb
+	
+	
+	pushb	58
+	outb
+	
+	
+	pusha	10
+	pusha	bp
+	push	4
+	addi
+	loadi
+	push	20
+	muli
+	addi
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	push	2
+	muli
+	addi
+	loadi
+	outi
+	
+	
+	pushb	32
+	outb
+	
+	
+	pusha	bp
+	push	-2
+	addi
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	push	1
+	addi
+	storei
+	jmp label_2
+label_3:
+	pushb	10
+	outb
+	ret 0, 2, 2
 '  Main:
 	'  * Parameters
 	'  * Local variables
-	'  * var pair TipoStruct [campos=[CampoStruct [nombre=integer, tipo=int], CampoStruct [nombre=character, tipo=char]]] (offset -3)
-	enter 3
-	pusha	0
-	push	3
-	storei
-	pusha	6
-	pushb	97
-	storeb
-	pusha	2
-	pushf	3.8
-	storef
-	
-	
+	'  * var i int (offset -2)
+	enter 2
+call <p>
 	pusha	bp
-	push	-3
+	push	-2
 	addi
 	push	0
-	addi
-	pusha	0
-	loadi
 	storei
 	
-	pusha	bp
-	push	-3
-	addi
+	
+	pusha	7
 	push	2
 	addi
-	pusha	6
-	loadb
+	pushb	48
 	storeb
 	
-	pusha	0
+	
+	
+	pusha	7
+	push	0
+	addi
+	pushb	48
+b2i
+	storei
+	
+	
+	
+	pusha	bp
+	push	-2
+	addi
 	loadi
-	pusha	2
-	loadf
+i2f
+	pusha	7
+	push	2
+	addi
+	loadb
+b2i
+call <f>
+	outi
+	
+	
+	pushb	10
+	outb
+	pushf	1.3
+	push	2
 call <f>
 	popi
-	ret 0, 3, 0
+	
+	
+	pusha	bp
+	push	-2
+	addi
+	push	0
+	storei
+	pusha	4
+	push	0
+	storei
+	
+	
+label_4:
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	push	10
+	lti
+	jz label_5
+	
+	
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	pusha	4
+	loadi
+	push	1
+call <fill>
+	pusha	bp
+	push	-2
+	addi
+	loadi
+call <show>
+	pusha	bp
+	push	-2
+	addi
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	push	1
+	addi
+	storei
+	
+	
+	pusha	4
+	pusha	bp
+	push	-2
+	addi
+	loadi
+	push	10
+	muli
+	storei
+	jmp label_4
+label_5:
+	ret 0, 2, 0

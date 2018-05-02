@@ -53,7 +53,11 @@ public class Main {
 		cg.saltoLinea();
 
 		AddresCodeGeneratorVisitor addresCodeGenerator = new AddresCodeGeneratorVisitor(cg);
-		ValueCodeGeneratorVisitor valueCodeGenerator = new ValueCodeGeneratorVisitor(cg, addresCodeGenerator);
+		ValueCodeGeneratorVisitor valueCodeGenerator = new ValueCodeGeneratorVisitor(cg);
+		
+		addresCodeGenerator.setValueCodeGenerator(valueCodeGenerator);
+		valueCodeGenerator.setAddresCodeGenerator(addresCodeGenerator);
+		
 		ExecuteCodeGeneratorVisitor executeCodeGenerator = new ExecuteCodeGeneratorVisitor(cg, valueCodeGenerator,
 				addresCodeGenerator);
 

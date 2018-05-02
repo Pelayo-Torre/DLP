@@ -2,6 +2,7 @@ package generacionCodigo;
 
 import java.io.IOException;
 
+import ast.AccesoArray;
 import ast.AccesoCampo;
 import ast.Aritmetica;
 import ast.Cast;
@@ -23,8 +24,11 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	CodeGenerator cg;
 	AddresCodeGeneratorVisitor acg;
 
-	public ValueCodeGeneratorVisitor(CodeGenerator cg, AddresCodeGeneratorVisitor acg) {
+	public ValueCodeGeneratorVisitor(CodeGenerator cg) {
 		this.cg = cg;
+	}
+	
+	public void setAddresCodeGenerator(AddresCodeGeneratorVisitor acg) {
 		this.acg = acg;
 	}
 
@@ -177,6 +181,19 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		} catch (IOException e) {
 			System.err.println("Error al hacer una llamada a la función VALUE. Línea: "+invocacionFuncion.getNombre().getLine());
 		}
+		return null;
+	}
+	
+	@Override
+	public Object visit(AccesoArray accesoArray, Object param) {
+		
+		accesoArray.accept(acg, param);
+		try {
+			cg.load(accesoArray.getTipo().suffix());
+		} catch (IOException e) {
+			System.err.println("Error al obtener valor de Array VALUE. Línea: "+accesoArray.getLine());
+		}
+		
 		return null;
 	}
 

@@ -8,12 +8,14 @@ import ast.DefVariable;
 import ast.Definicion;
 import ast.Escritura;
 import ast.Expresion;
+import ast.If;
 import ast.InvocacionFuncion;
 import ast.Lectura;
 import ast.Procedimiento;
 import ast.Programa;
 import ast.Return;
 import ast.Sentencia;
+import ast.While;
 import tipo.TipoFuncion;
 import tipo.TipoVoid;
 
@@ -180,6 +182,45 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		} catch (IOException e) {
 			System.err.println("Error al hacer la sentencia Return EXECUTE. Línea: "+sentenciaReturn.getLine());
 		}
+		return null;
+	}
+	
+	@Override
+	public Object visit(If sentenciaIf, Object param) {
+		int label = cg.getLabel(2);
+		//throw new IllegalArgumentException("No se puede aplicar " + sentenciaIf.toString() + " esta plantilla");
+		sentenciaIf.getExpr().accept(vcgv, param);
+		try {
+			cg.jz("label_"+label);
+			for(Sentencia a : sentenciaIf.getSentenciasIf())
+				a.accept(this, param);
+			cg.jmp("label_"+(label+1));
+			cg.etiqueta("label_"+label+":");
+			for(Sentencia b : sentenciaIf.getSentenciasElse())
+				b.accept(this, param);
+			cg.etiqueta("label_"+(label+1)+":");
+		} catch (IOException e) {
+			System.err.println("Error al ejecutar senetencia IF EXECUTE. Línea: "+sentenciaIf.getExpr().getLine());
+		}
+		return null;
+	}
+	
+	@Override
+	public Object visit(While sentenciaWhile, Object param) {
+		
+		int label = cg.getLabel(2);
+		try {
+			cg.etiqueta("label_"+label+":");
+			sentenciaWhile.getExpr().accept(vcgv, param);
+			cg.jz("label_"+(label+1));
+			for(Sentencia a : sentenciaWhile.getSentencias()) 
+				a.accept(this, param);
+			cg.jmp("label_"+label);
+			cg.etiqueta("label_"+(label+1)+":");
+		} catch (IOException e) {
+			
+		}
+		
 		return null;
 	}
 

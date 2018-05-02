@@ -2,6 +2,7 @@ package generacionCodigo;
 
 import java.io.IOException;
 
+import ast.AccesoArray;
 import ast.AccesoCampo;
 import ast.DefVariable;
 import ast.Variable;
@@ -9,9 +10,14 @@ import ast.Variable;
 public class AddresCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 	CodeGenerator cg;
+	ValueCodeGeneratorVisitor vcg;
 
 	public AddresCodeGeneratorVisitor(CodeGenerator cg) {
 		this.cg = cg;
+	}
+	
+	public void setValueCodeGenerator(ValueCodeGeneratorVisitor valueCodeGenerator) {
+		this.vcg = valueCodeGenerator;
 	}
 
 	@Override
@@ -48,6 +54,23 @@ public class AddresCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		} catch (IOException e) {
 			System.err.println("Error al acceder a campo en plantilla ADDRESS. Línea: " + accesoCampo.getLine());
 		}
+		return null;
+	}
+	
+	@Override
+	public Object visit(AccesoArray accesoArray, Object param) {
+		
+		accesoArray.getNombre().accept(this, param);
+		accesoArray.getPosicion().accept(vcg, param);
+		
+		try {
+			cg.push(accesoArray.getTipo().numeroBytes());
+			cg.mul('i');
+			cg.add('i');
+		} catch (IOException e) {
+			System.err.println("Error al acceder a array en plantilla ADDRESS. Línea: " + accesoArray.getLine());
+		}
+		
 		return null;
 	}
 

@@ -6,11 +6,21 @@ import java.io.IOException;
 public class CodeGenerator {
 
 	FileWriter out;
+	int label = 0;
 
 	// ****************INSTRUCCIONES PUSH*********************//
 
 	public CodeGenerator(FileWriter fw) {
 		this.out = fw;
+	}
+	
+	/**
+	 * Devuelve el nº de etiquetas que se necesitan
+	 */
+	public int getLabel(int label) {
+		int a = this.label;
+		this.label += label;
+		return a;
 	}
 
 	public void pushb(int c) throws IOException {
@@ -135,15 +145,15 @@ public class CodeGenerator {
 	}
 
 	public void jmp(String salto) throws IOException {
-		out.write("\tjmp <" + salto + ">" + "\n");
+		out.write("\tjmp " + salto + "\n");
 	}
 
 	public void jz(String salto) throws IOException {
-		out.write("\tjz <" + salto + ">" + "\n");
+		out.write("\tjz " + salto + "\n");
 	}
 
 	public void jnz(String salto) throws IOException {
-		out.write("\tjnz <" + salto + ">" + "\n");
+		out.write("\tjnz " + salto + "\n");
 	}
 
 	// **********************FUNCIONES**************************************//
@@ -187,6 +197,10 @@ public class CodeGenerator {
 	
 	public void saltoLinea() throws IOException {
 		out.write("\n");
+	}
+	
+	public void etiqueta(String etiqueta) throws IOException{
+		out.write(etiqueta + "\n");
 	}
 
 }
