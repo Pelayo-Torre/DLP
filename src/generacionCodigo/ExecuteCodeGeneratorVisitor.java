@@ -119,7 +119,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		int[] necesarioRetorno = new int [3];
 		necesarioRetorno[0] = defFuncion.getTipo().numeroBytes();
 		try {
-			cg.comentario(defFuncion.getNombre() + ":");
+			cg.func(defFuncion.getNombre());
 			cg.comentarioTabulado("* Parameters");
 			
 			int tamParametros = 0;
@@ -145,7 +145,9 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 			//Recorremos las sentencias de la función que no sean defVariables.
 			for(Sentencia s : defFuncion.getSentencias()) {
 				if(!(s instanceof DefVariable)) {
+					cg.line(s.getLine());
 					s.accept(this, necesarioRetorno);
+					cg.saltoLinea();
 				}
 			}
 			

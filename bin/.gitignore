@@ -1,3 +1,13 @@
 /generacionCodigo/
 /main/
 /semantico/
+/ast/
+/compile.cmd
+/lexico/
+/manejadorerrores/
+/run.cmd
+/sintactico/
+/tablasimbolos/
+/test/
+/tipo/
+/visitor/

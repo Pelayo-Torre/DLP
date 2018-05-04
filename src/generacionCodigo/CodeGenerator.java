@@ -135,7 +135,7 @@ public class CodeGenerator {
 	// *********************INSTRUCCIONES DE CONVERSIÓN*******************//
 
 	public void cast(char tipoIzq, char tipoDcha) throws IOException {
-		out.write(tipoIzq + "2" + tipoDcha + "\n");
+		out.write("\t"+tipoIzq + "2" + tipoDcha + "\n");
 	}
 
 	// ******************INSTRUCCIONES DE SALTO***************************//
@@ -159,7 +159,7 @@ public class CodeGenerator {
 	// **********************FUNCIONES**************************************//
 
 	public void call(String func) throws IOException {
-		out.write("call <" + func + ">" + "\n");
+		out.write("\tcall " + func + "\n");
 	}
 
 	public void enter(int cte) throws IOException {
@@ -201,6 +201,10 @@ public class CodeGenerator {
 	
 	public void etiqueta(String etiqueta) throws IOException{
 		out.write(etiqueta + "\n");
+	}
+	
+	public void func(String func) throws IOException{
+		out.write(" "+func + ":\n");
 	}
 
 }

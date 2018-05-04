@@ -15,7 +15,7 @@ public class Programa extends AbstractNodoAST{
 	public Programa(int line, int column, List<Definicion> definiciones, List<Sentencia>sentencias) {
 		super(line, column);
 		this.definiciones = definiciones;		
-		DefFuncion main = new DefFuncion(0, 0, "Main", new TipoFuncion(0, 0, new ArrayList<DefVariable>(),new TipoVoid(0,0)), sentencias);
+		DefFuncion main = new DefFuncion(0, 0, "main", new TipoFuncion(0, 0, new ArrayList<DefVariable>(),new TipoVoid(0,0)), sentencias);
 		this.definiciones.add(main);
 		
 		

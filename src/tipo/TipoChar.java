@@ -33,6 +33,13 @@ public class TipoChar extends AbstractTipo{
 	}
 	
 	@Override
+	public Tipo aritmetica(Tipo tipo) {
+		if(tipo.getClass().equals(this.getClass()))
+			return new TipoEntero(0,0);
+		return super.aritmetica(tipo);
+	}
+	
+	@Override
 	public Tipo cast(Tipo tipo) {
 		if(esBasico() == true)
 			return tipo;

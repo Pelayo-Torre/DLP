@@ -23,6 +23,13 @@ public class TipoEntero extends AbstractTipo{
 	}
 	
 	@Override
+	public Tipo aritmetica(Tipo tipo) {
+		if(tipo.getClass().equals(this.getClass()))
+			return this;
+		return super.aritmetica(tipo);
+	}
+	
+	@Override
 	public boolean esBasico() {
 		return true;
 	}

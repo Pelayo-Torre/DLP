@@ -17,8 +17,7 @@ public abstract class AbstractTipo extends AbstractNodoAST implements Tipo {
 
 	@Override
 	public Tipo aritmetica(Tipo tipo) {
-		if ((tipo instanceof TipoEntero || tipo instanceof TipoFloat32 || tipo instanceof TipoError
-				|| tipo instanceof TipoChar) && tipo.getClass().equals(getClass()))
+		if(tipo instanceof TipoError)
 			return tipo;
 		return null;
 	}
@@ -65,7 +64,7 @@ public abstract class AbstractTipo extends AbstractNodoAST implements Tipo {
 		if ((tipo instanceof TipoEntero || tipo instanceof TipoFloat32 
 				|| tipo instanceof TipoChar) && tipo.getClass().equals(getClass()))
 			return new TipoEntero(tipo.getLine(), tipo.getColumn());
-		else if(tipo instanceof TipoError && tipo.getClass().equals(getClass()))
+		else if(tipo instanceof TipoError)
 			return tipo;
 		return null;
 	}
@@ -77,9 +76,11 @@ public abstract class AbstractTipo extends AbstractNodoAST implements Tipo {
 
 	@Override
 	public Tipo logica(Tipo tipo) {
-		if ((tipo instanceof TipoEntero || tipo instanceof TipoError) && tipo.getClass().equals(getClass())) {
+		if ((tipo instanceof TipoEntero && tipo.getClass().equals(getClass()))) {
 			return tipo;
 		}
+		else if(tipo instanceof TipoError)
+			return tipo;
 		return null;
 	}
 

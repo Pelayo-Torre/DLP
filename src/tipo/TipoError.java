@@ -53,5 +53,19 @@ public class TipoError extends AbstractTipo{
 		throw new IllegalArgumentException("No se puede calcular el nº de bytes de un error");
 	}
 	
+	@Override
+	public Tipo aritmetica(Tipo tipo) {
+		return this;
+	}
+	
+	@Override
+	public Tipo comparacion(Tipo tipo) {
+		return this;
+	}
+	
+	@Override
+	public Tipo logica(Tipo tipo) {
+		return this;
+	}
 	
 }

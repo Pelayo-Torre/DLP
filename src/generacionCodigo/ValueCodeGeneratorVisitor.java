@@ -80,11 +80,15 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 	@Override
 	public Object visit(Aritmetica aritmetica, Object param) {
-		aritmetica.getIzquierda().accept(this, param);
-		aritmetica.getDerecha().accept(this, param);
-
 		try {
-			cg.aritmetica(aritmetica.getOperador(), aritmetica.getIzquierda().getTipo().suffix());
+			aritmetica.getIzquierda().accept(this, param);
+			if(aritmetica.getIzquierda().getTipo() instanceof TipoChar)
+				cg.cast('b', 'i');
+			aritmetica.getDerecha().accept(this, param);
+			if(aritmetica.getDerecha().getTipo() instanceof TipoChar)
+				cg.cast('b', 'i');
+			
+			cg.aritmetica(aritmetica.getOperador(), aritmetica.getTipo().suffix());
 		} catch (IOException e) {
 			System.err.println("Error al realizar la operación aritmética en plantilla VALUE. Línea: "+aritmetica.getIzquierda().getLine());
 		}
